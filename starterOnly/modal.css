@@ -208,6 +208,7 @@ input {
   font-size: 20px;
   height: 48px;
 }
+
 .formData[data-error]::after {
   content: attr(data-error);
   font-size: 0.4em;
@@ -405,7 +406,6 @@ input[data-error]::after {
   font-size: 16px;
 }
 .hero-section {
-  min-height: 93vh;
   border-radius: 10px;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
@@ -525,5 +525,36 @@ footer {
   to {
     opacity: 1;
   }
+}
+
+/* mes modif */
+
+.error-message {
+  font-size: 0.4em;
+  color: #e54858;
+  display: block;
+  margin-top: 7px;
+  margin-bottom: 7px;
+  text-align: right;
+  line-height: 0.3;
+  transition: 0.3s;
+}
+
+.modal-body-success {
+  display: none;
+  color: white;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.button-success-return {
+  background-color: #e54858;
+  padding: 10px 80px;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+  border-color: transparent;
 }
 
