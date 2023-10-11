@@ -10,7 +10,6 @@ function editNav() {
 // DOM Elements
 const modalbg = document.querySelector(".bground");
 const modalBtn = document.querySelectorAll(".modal-btn");
-const formData = document.querySelectorAll(".formData");
 const closeModalBtn = document.querySelectorAll(".close");
 
 // launch modal event
@@ -29,37 +28,98 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-//default form operation + form validation function call
 
-const form = document.querySelector("form[name='reserve']");
+const form = document.gettElementByID("form");
 form.addEventListener("submit", function (event) {
   event.preventDefault();
+
+  const errorFields = document.querySelectorAll(".error-message");
+  errorFields.forEach((field) => (field.textContent = ""));
 
   validateForm();
 });
 
-// validation form
-
+// Validation form
 function validateForm() {
-  // Récupérer les éléments de formulaire
-  const firstName = document.getElementById("first");
-  const firstNameErrorMessage = document.getElementById("first-name-error");
-  const lastName = document.getElementById("last");
-  const lastNameErrorMessage = document.getElementById("last-name-error");
-  const checkBox = document.getElementById("checkbox1");
-  const submitButton = document.querySelector(".btn-submit");
-  const checkBox1ErrorMessage = document.getElementById("check-box-error");
+  const formData = document.querySelectorAll(".formData");
+
+  const formDataValues = {};
+
+  let isValid = true;
+
+  formData.forEach((element) => {
+    const input = element.querySelector("input, select");
+    const name = input.name;
+    const value = input.value;
+    formDataValues[name] = value;
+  });
+
+  if (formDataValues.first.trim().length < 2) {
+    isValid = false;
+    displayErrorMessage("first", "Le prénom doit contenir au moins 2 caractères.");
+  }
+
+  if (formDataValues.last.trim().length < 2) {
+    isValid = false;
+    displayErrorMessage("last", "Le nom de famille doit contenir au moins 2 caractères.");
+  }
+
+  if (!isValidEmail(formDataValues.email)) {
+    isValid = false;
+    displayErrorMessage("email", "Veuillez entrer une adresse email valide.");
+  }
+
+  if (formDataValues.birthdate.length < 1) {
+    isValid = false;
+    displayErrorMessage("birthdate", "Veuillez entrer une date de naissance.");
+  }
+
+  if (isNaN(formDataValues.quantity) || formDataValues.quantity.length < 1) {
+    isValid = false;
+    displayErrorMessage("quantity", "Veuillez entrer une valeur numérique pour le nombre de concours.");
+  }
+
+  const locationInputs = document.getElementsByName("location");
+  const locationChecked = Array.from(locationInputs).some((input) => input.checked);
+  if (!locationChecked) {
+    isValid = false;
+    displayErrorMessage("location", "Veuillez sélectionner un lieu.");
+  }
+
+  if (!formDataValues.checkbox1) {
+    isValid = false;
+    displayErrorMessage("checkbox1", "Vous devez accepter les conditions générales.");
+  }
+
+  if (isValid) {
+    return displaySuccessMessage();
+  }
+}
+
+//regex email
+function isEmail(email) {
+  return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test
+  (email);
+} 
+
+// Error Message
+function displayErrorMessage(fieldName, errorMessage) {
+  const errorField = document.getElementById(`${fieldName}-error`);
+  const inputField = document.getElementById(fieldName);
+
+  errorField.textContent = errorMessage;
+}
+
+function displaySuccessMessage() {
+  //submit success 
   const contentModal = document.querySelector(".modal-body");
   const contentModalSuccess = document.querySelector(".modal-body-success");
-  const exitButton = document.querySelectorAll(".button-success-return");
 
-  //submit success
-  submitButton.addEventListener("click", () => {
-    contentModal.style.display = "none";
-    contentModalSuccess.style.display = "flex";
+  contentModal.style.display = "none";
+  contentModalSuccess.style.display = "flex";
 
   //exit submit success
-    exitButton.forEach((btn) => btn.addEventListener("click", closeModal));
-    
-  });
-}
+  exitButton.forEach((btn) => btn.addEventListener("click", closeModal));
+
+  return false;
+};
