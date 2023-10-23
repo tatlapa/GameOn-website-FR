@@ -28,8 +28,7 @@ function closeModal() {
   modalbg.style.display = "none";
 }
 
-
-const form = document.gettElementByID("form");
+const form = document.getElementById("form");
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
@@ -45,7 +44,7 @@ function validateForm() {
 
   const formDataValues = {};
 
-  let isValid = true;
+  let isFieldValid = true;
 
   formData.forEach((element) => {
     const input = element.querySelector("input, select");
@@ -55,71 +54,82 @@ function validateForm() {
   });
 
   if (formDataValues.first.trim().length < 2) {
-    isValid = false;
-    displayErrorMessage("first", "Le prénom doit contenir au moins 2 caractères.");
+    isFieldValid = false;
+    displayErrorMessage(
+      "first",
+      "Le prénom doit contenir au moins 2 caractères."
+    );
   }
 
   if (formDataValues.last.trim().length < 2) {
-    isValid = false;
-    displayErrorMessage("last", "Le nom de famille doit contenir au moins 2 caractères.");
+    isFieldValid = false;
+    displayErrorMessage(
+      "last",
+      "Le nom de famille doit contenir au moins 2 caractères."
+    );
   }
 
-  if (!isValidEmail(formDataValues.email)) {
-    isValid = false;
+  if (!isEmail(formDataValues.email)) {
+    isFieldValid = false;
     displayErrorMessage("email", "Veuillez entrer une adresse email valide.");
   }
 
   if (formDataValues.birthdate.length < 1) {
-    isValid = false;
+    isFieldValid = false;
     displayErrorMessage("birthdate", "Veuillez entrer une date de naissance.");
   }
 
   if (isNaN(formDataValues.quantity) || formDataValues.quantity.length < 1) {
-    isValid = false;
-    displayErrorMessage("quantity", "Veuillez entrer une valeur numérique pour le nombre de concours.");
+    isFieldValid = false;
+    displayErrorMessage(
+      "quantity",
+      "Veuillez entrer une valeur numérique pour le nombre de concours."
+    );
   }
 
   const locationInputs = document.getElementsByName("location");
-  const locationChecked = Array.from(locationInputs).some((input) => input.checked);
+  const locationChecked = Array.from(locationInputs).some(
+    (input) => input.checked
+  );
   if (!locationChecked) {
-    isValid = false;
+    isFieldValid = false;
     displayErrorMessage("location", "Veuillez sélectionner un lieu.");
   }
 
-  if (!formDataValues.checkbox1) {
-    isValid = false;
-    displayErrorMessage("checkbox1", "Vous devez accepter les conditions générales.");
+  const checkbox1Checked = document.getElementById("checkbox1");
+
+  if (!checkbox1Checked.checked) {
+    isFieldValid = false;
+    displayErrorMessage(
+      "checkbox1",
+      "Vous devez accepter les conditions générales."
+    );
   }
 
-  if (isValid) {
+  if (isFieldValid) {
     return displaySuccessMessage();
   }
 }
 
 //regex email
 function isEmail(email) {
-  return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test
-  (email);
-} 
+  return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    email
+  );
+}
 
 // Error Message
 function displayErrorMessage(fieldName, errorMessage) {
   const errorField = document.getElementById(`${fieldName}-error`);
-  const inputField = document.getElementById(fieldName);
 
   errorField.textContent = errorMessage;
 }
 
 function displaySuccessMessage() {
-  //submit success 
+  //submit success
   const contentModal = document.querySelector(".modal-body");
   const contentModalSuccess = document.querySelector(".modal-body-success");
 
   contentModal.style.display = "none";
   contentModalSuccess.style.display = "flex";
-
-  //exit submit success
-  exitButton.forEach((btn) => btn.addEventListener("click", closeModal));
-
-  return false;
-};
+}

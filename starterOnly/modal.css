@@ -530,12 +530,11 @@ footer {
 /* mes modif */
 
 .error-message {
-  font-size: 0.4em;
+  font-size: 0.5em;
   color: #e54858;
   display: block;
   margin-top: 7px;
   margin-bottom: 7px;
-  text-align: right;
   line-height: 0.3;
   transition: 0.3s;
 }
@@ -549,12 +548,4 @@ footer {
   padding: 20px;
 }
 
-.button-success-return {
-  background-color: #e54858;
-  padding: 10px 80px;
-  color: white;
-  cursor: pointer;
-  border-radius: 5px;
-  border-color: transparent;
-}
 
