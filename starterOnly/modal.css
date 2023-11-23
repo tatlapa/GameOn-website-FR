@@ -68,6 +68,10 @@ img {
   display: none;
 }
 
+.fa-bars {
+  color: red;
+}
+
 @media screen and (max-width: 768px) {
   .topnav a {display: none;}
   .topnav a.icon {
@@ -574,6 +578,7 @@ footer {
     max-width: none;
     height: 100%;
   }
+  
 }
 
 
