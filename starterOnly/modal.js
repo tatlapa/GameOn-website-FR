@@ -133,9 +133,13 @@ function displaySuccessMessage() {
   contentModal.style.display = "none";
   contentModalSuccess.style.display = "flex";
 
+
+  //reset form
   document.getElementById("form").reset();
 
-  const resetButton = document.getElementById("reset");
+  //close success form
+  const resetButton =
+    document.getElementById("reset");
   resetButton.addEventListener("click", function () {
     contentModal.style.display = "flex";
     contentModalSuccess.style.display = "none";
