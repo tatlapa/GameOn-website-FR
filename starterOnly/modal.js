@@ -133,15 +133,16 @@ function displaySuccessMessage() {
   contentModal.style.display = "none";
   contentModalSuccess.style.display = "flex";
 
-
   //reset form
   document.getElementById("form").reset();
 
   //close success form
-  const resetButton =
-    document.getElementById("reset");
-  resetButton.addEventListener("click", function () {
-    contentModal.style.display = "flex";
-    contentModalSuccess.style.display = "none";
+  const resetButtons = document.querySelectorAll("#reset");
+
+  resetButtons.forEach(function(resetButton) {
+    resetButton.addEventListener("click", function () {
+      contentModal.style.display = "flex";
+      contentModalSuccess.style.display = "none";
+    });
   });
 }
