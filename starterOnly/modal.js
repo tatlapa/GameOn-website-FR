@@ -21,11 +21,13 @@ closeModalBtn.forEach((btn) => btn.addEventListener("click", closeModal));
 // launch modal form
 function launchModal() {
   modalbg.style.display = "block";
+
 }
 
 // close modal form
 function closeModal() {
   modalbg.style.display = "none";
+
 }
 
 const form = document.getElementById("form");
@@ -139,10 +141,11 @@ function displaySuccessMessage() {
   //close success form
   const resetButtons = document.querySelectorAll("#reset");
 
-  resetButtons.forEach(function(resetButton) {
+  resetButtons.forEach(function (resetButton) {
     resetButton.addEventListener("click", function () {
       contentModal.style.display = "flex";
       contentModalSuccess.style.display = "none";
+      scrolling.style.overflow = "auto";
     });
   });
 }
